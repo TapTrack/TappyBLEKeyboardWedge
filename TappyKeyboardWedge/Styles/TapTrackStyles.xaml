@@ -1,0 +1,159 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+	<SolidColorBrush x:Key="DarkBackground">#262626</SolidColorBrush>
+	<SolidColorBrush x:Key="LightBackground">#404040</SolidColorBrush>
+	<SolidColorBrush x:Key="Accent">#FF15AAFF</SolidColorBrush>
+	<SolidColorBrush x:Key="AccentHighLight">#FF30B4FF</SolidColorBrush>
+	<SolidColorBrush x:Key="AccentHighLightDark">#0081CC</SolidColorBrush>
+
+
+	<BitmapImage x:Key="Settings_dark" UriSource="/Resources/settings_dark.png"/>
+	<BitmapImage x:Key="Settings_highlight" UriSource="/Resources/settings_highlight.png"/>
+
+	<BitmapImage x:Key="Bluetooth" UriSource="/Resources/bluetooth.png"/>
+	<BitmapImage x:Key="Bluetooth_highlight" UriSource="/Resources/bluetooth_highlight.png"/>
+	<BitmapImage x:Key="Success" UriSource="/Resources/success.png"/>
+
+	<BitmapImage x:Key="Pending" UriSource="/Resources/pending.gif"/>
+	<BitmapImage x:Key="Refresh" UriSource="/Resources/refresh.png"/>
+
+	<BitmapImage x:Key="BluetoothSearching" UriSource="/Resources/bluetooth_searching.png"/>
+	<BitmapImage x:Key="BluetoothDisabled" UriSource="/Resources/bluetooth_disabled.png"/>
+	<BitmapImage x:Key="CloudQueueHighlight" UriSource="/Resources/cloud_queue_highlight.png"/>
+	<BitmapImage x:Key="CloudHighlight" UriSource="/Resources/cloud_highlight.png"/>
+	<BitmapImage x:Key="AddCircleOutline" UriSource="/Resources/add_circle_outline.png"/>
+	<BitmapImage x:Key="RemoveCircleOutline" UriSource="/Resources/remove_circle_outline.png"/>
+	
+	
+	
+
+	<Style x:Key="TextBox" TargetType="{x:Type TextBox}">
+		<Setter Property="Margin" Value="10,0,20,20"/>
+		<Setter Property="Foreground" Value="White"/>
+		<Setter Property="Background" Value="{StaticResource LightBackground}"/>
+		<Setter Property="BorderBrush" Value="#595959"/>
+		<Setter Property="BorderThickness" Value="0,0,0,1"/>
+	</Style>
+
+	<Style x:Key="SettingTab" TargetType="{x:Type TabItem}">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate>
+					<Grid Name="Container" ToolTip="Configure Tappy Settings" Background="White" Margin="10">
+						<Image Width="30" Height="30" Stretch="Fill" Name="Pressed" Visibility="Hidden" Source="{StaticResource Settings_highlight}"/>
+						<Image Width="30" Height="30" Stretch="Fill" Name="Unpressed" Visibility="Visible" Source="{StaticResource Settings_dark}"/>
+					</Grid>
+					<ControlTemplate.Triggers>
+						<Trigger SourceName="Container"  Property="IsMouseOver" Value="True">
+							<Setter TargetName="Pressed" Property="Visibility" Value="Visible"/>
+							<Setter TargetName="Unpressed" Property="Visibility" Value="Hidden"/>
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<Style x:Key="BluetoothTab" TargetType="{x:Type TabItem}">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate>
+					<Grid Name="Container" ToolTip="Configure Tappy Settings" Background="White" Margin="10">
+						<Image Width="30" Height="30" Stretch="Fill" Name="Pressed" Visibility="Hidden" Source="{StaticResource Bluetooth_highlight}"/>
+						<Image Width="30" Height="30" Stretch="Fill" Name="Unpressed" Visibility="Visible" Source="{StaticResource Bluetooth}"/>
+					</Grid>
+					<ControlTemplate.Triggers>
+						<Trigger SourceName="Container"  Property="IsMouseOver" Value="True">
+							<Setter TargetName="Pressed" Property="Visibility" Value="Visible"/>
+							<Setter TargetName="Unpressed" Property="Visibility" Value="Hidden"/>
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<Style x:Key="RoundButton" TargetType="{x:Type Button}">
+		<Setter Property="Foreground" Value="White"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type Button}">
+					<Border Name="Container" Background="{StaticResource ResourceKey=Accent}" Margin="10" Padding="5" CornerRadius="2">
+						<ContentPresenter Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+					</Border>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsMouseOver" Value="True">
+							<Setter TargetName="Container" Property="Background" Value="{StaticResource ResourceKey=AccentHighLight}"/>
+						</Trigger>
+						<Trigger Property="Button.IsPressed" Value="True">
+							<Setter TargetName="Container" Property="Background" Value="{StaticResource ResourceKey=AccentHighLightDark}"/>
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!--Animated Switch ToggleButton - resource: marcangers.com -->
+	<Style x:Key="AnimatedSwitch" TargetType="{x:Type ToggleButton}">
+		<Setter Property="Foreground" Value="Black" />
+		<Setter Property="Background" Value="#FAFAFB" />
+		<Setter Property="BorderBrush" Value="#EAEAEB" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="ToggleButton">
+					<Viewbox Stretch="Uniform">
+						<Canvas Name="Layer_1" Width="20" Height="20" Canvas.Left="10" Canvas.Top="0">
+							<Ellipse  Canvas.Left="0" Width="20" Height="20" Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="0.5"/>
+							<Ellipse  Canvas.Left="15" Width="20" Height="20" Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="0.5"/>
+							<Border Canvas.Left="10" Width="15" Height="20" Name="rect416927" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0,0.5,0,0.5"/>
+							<Ellipse x:Name="ellipse"  Canvas.Left="0" Width="20" Height="20" Fill="White" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="0.3">
+								<Ellipse.RenderTransform>
+									<TranslateTransform X="0" Y="0" />
+								</Ellipse.RenderTransform>
+								<Ellipse.BitmapEffect>
+									<DropShadowBitmapEffect Softness="0.1" ShadowDepth="0.7" Direction="270" Color="#BBBBBB"/>
+								</Ellipse.BitmapEffect>
+							</Ellipse>
+						</Canvas>
+					</Viewbox>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsChecked" Value="True" >
+							<Trigger.EnterActions>
+								<BeginStoryboard>
+									<Storyboard>
+										<ColorAnimation Storyboard.TargetProperty="Background.Color" To="#30B4FF" Duration="0:0:0.2" />
+										<!--#52D468-->
+										<ColorAnimation Storyboard.TargetProperty="BorderBrush.Color" To="#404040" Duration="0:0:0.2" />
+										<!--#41C955-->
+										<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Ellipse.RenderTransform).(TranslateTransform.X)" Storyboard.TargetName="ellipse">
+											<SplineDoubleKeyFrame KeyTime="0" Value="0"/>
+											<SplineDoubleKeyFrame KeyTime="0:0:0.4" Value="15" KeySpline="0, 1, 0.6, 1"/>
+										</DoubleAnimationUsingKeyFrames>
+									</Storyboard>
+								</BeginStoryboard>
+							</Trigger.EnterActions>
+							<Trigger.ExitActions>
+								<BeginStoryboard>
+									<Storyboard>
+										<ColorAnimation Storyboard.TargetProperty="Background.Color" To="#FAFAFB" Duration="0:0:0.2" />
+										<ColorAnimation Storyboard.TargetProperty="BorderBrush.Color" To="#EAEAEB" Duration="0:0:0.2" />
+										<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Ellipse.RenderTransform).(TranslateTransform.X)" Storyboard.TargetName="ellipse">
+											<SplineDoubleKeyFrame KeyTime="0" Value="15"/>
+											<SplineDoubleKeyFrame KeyTime="0:0:0.3" Value="0" KeySpline="0, 0.5, 0.5, 1"/>
+										</DoubleAnimationUsingKeyFrames>
+									</Storyboard>
+								</BeginStoryboard>
+							</Trigger.ExitActions>
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+
+
+</ResourceDictionary>

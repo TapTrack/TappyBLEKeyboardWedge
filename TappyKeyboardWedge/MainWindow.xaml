@@ -3,10 +3,181 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+		xmlns:gif="http://wpfanimatedgif.codeplex.com"
         xmlns:local="clr-namespace:TappyKeyboardWedge"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        Title="TappyBLE NFC Keyboard Wedge" 
+		Height="352.8" Width="650">
+	<Grid Background="{StaticResource LightBackground}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="35"/>
+			<RowDefinition Name="settingsContainer" Height="0"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<WrapPanel Grid.Row="0" HorizontalAlignment="Stretch">
+			<WrapPanel.Background>
+				<LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+					<GradientStop Color="#991F9ED9" Offset="0.0" />
+					<!--<GradientStop Color="#881F9ED9" Offset="0.3" />-->
+					<GradientStop Color="#404040" Offset="0.3" />
+				</LinearGradientBrush>
+			</WrapPanel.Background>
+			<Image Source="Resources/taptrack-rev2.png" Margin="25,5"/>
+			<!--<TextBlock Margin="10" FontSize="20" Foreground="White">TapTrack</TextBlock>-->
+		</WrapPanel>
+		<Popup Name="statusPopup" Placement="Center" Grid.Row="2" Height="Auto" MinWidth="175" Width="Auto" PopupAnimation="Fade">
+			<Border CornerRadius="1" BorderBrush="Gray" BorderThickness="2" Background="{StaticResource DarkBackground}">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition/>
+						<RowDefinition Name="dismissButtonContainer" Height="0"/>
+					</Grid.RowDefinitions>
+
+					<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0">
+						<StackPanel Margin="0,20,0,0" Orientation="Horizontal" HorizontalAlignment="Center" >
+							<Label Name="statusText" FontSize="15" VerticalAlignment="Center" Foreground="White"/>
+							<Image Name="statusImage" Height="30" gif:ImageBehavior.AnimatedSource="{x:Null}" />
+						</StackPanel>
+						<Label Name="statusMessage" Padding="10,0,10,10" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+					</StackPanel>
+
+					<Button Name="dismissButton" HorizontalAlignment="Center" Visibility="Hidden" Grid.Row="1" 
+							Style="{StaticResource RoundButton}" 
+							Click="DismissButton_Click">Dismiss</Button>
+				</Grid>
+			</Border>
+		</Popup>
+		<TabControl Grid.Row="2" Padding="0" TabStripPlacement="Left" Background="{x:Null}" BorderThickness="0">
+			<TabControl.Resources>
+				<Style TargetType="{x:Type Grid}">
+					<Setter Property="Background" Value="White"/>
+				</Style>
+				<Style TargetType="{x:Type TabPanel}">
+					<Setter Property="VerticalAlignment" Value="Top"/>
+				</Style>
+			</TabControl.Resources>
+			<TabItem Style="{StaticResource BluetoothTab}">
+				<ScrollViewer VerticalScrollBarVisibility="Auto">
+					<StackPanel Background="{StaticResource DarkBackground}" Orientation="Vertical">
+						<StackPanel Margin="10">
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition/>
+									<ColumnDefinition/>
+								</Grid.ColumnDefinitions>
+							</Grid>
+							<TextBlock Foreground="White" TextWrapping="Wrap" FontSize="15" Margin="0,0,0,10">
+                                        Active Tappy
+							</TextBlock>
+							<ListView Name="lvActiveTappies" Background="{StaticResource DarkBackground}" ItemsSource="{Binding}">
+								<ListView.ItemTemplate>
+									<DataTemplate>
+										<Grid >
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition/>
+												<ColumnDefinition/>
+												<ColumnDefinition/>
+											</Grid.ColumnDefinitions>
+											<Image Grid.Column="0" Width="20" Source="{StaticResource CloudHighlight}" Margin="0,0,5,0"/>
+											<TextBlock Grid.Column="1" Width="150" Foreground="White" Text="{Binding DeviceName}" VerticalAlignment="Center"/>
+											<Button Grid.Column="2" Width="25" Tag="{Binding }" Click="btnDisconnect_Click">
+												<Button.Content>
+													<Image Name="imgRefresh" Source="{StaticResource RemoveCircleOutline}"/>
+												</Button.Content>
+											</Button>
+										</Grid>
+									</DataTemplate>
+								</ListView.ItemTemplate>
+							</ListView>
+
+							<Grid Background="{StaticResource DarkBackground}">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="150"/>
+									<ColumnDefinition/>
+								</Grid.ColumnDefinitions>
+								<TextBlock Foreground="White" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="15" Margin="0,0,0,10">
+                                        Nearby Tappies
+								</TextBlock>
+								<Button Name="btnRefresh" Grid.Column="1" Width="60" Height="35" HorizontalAlignment="Right" Click="btnRefresh_async_Click" Margin="0,3">
+									<Button.Content>
+										<Image Name="imgRefresh" Source="{StaticResource BluetoothSearching}"/>
+									</Button.Content>
+								</Button>
+								<!--<ToggleButton Grid.Column="2" Name="tgbtnLaunchKeyboardFeature" Style="{StaticResource AnimatedSwitch }"  
+														  Width="50" Height="20" Tag="{Binding}" Checked="tgbtnLaunchKeyboardFeature_Checked" Unchecked="tgbtnLaunchKeyboardFeature_Unchecked"/>-->
+							</Grid>
+							
+							<ListView Name="lvNearbyTappies" Background="{StaticResource DarkBackground}" ItemsSource="{Binding}" HorizontalAlignment="Stretch">
+								<ListView.ItemTemplate>
+									<DataTemplate>
+										<Grid HorizontalAlignment="Stretch">
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition/>
+												<ColumnDefinition/>
+												<ColumnDefinition/>
+											</Grid.ColumnDefinitions>
+											<Image Grid.Column="0" Width="20" Source="{StaticResource CloudQueueHighlight}" Margin="0,0,5,0"/>
+											<TextBlock Grid.Column="1" Width="150" Foreground="White" Text="{Binding}"/>
+											<Button Name="btnConnect" Grid.Column="2" Width="25" Tag="{Binding }" Click="btnConnect_Click">
+												<Button.Content>
+													<Image Name="imgRefresh" Source="{StaticResource AddCircleOutline}"/>
+												</Button.Content>
+											</Button>
+											<!--<ToggleButton Grid.Column="2" Name="tgbtnLaunchKeyboardFeature" Style="{StaticResource AnimatedSwitch }"  
+														  Width="50" Height="20" Tag="{Binding}" Checked="tgbtnConnect_Click" />-->
+										</Grid>
+									</DataTemplate>
+								</ListView.ItemTemplate>
+							</ListView>
+						</StackPanel>
+					</StackPanel>
+				</ScrollViewer>
+			</TabItem>
+			<TabItem Style="{StaticResource SettingTab}">
+				<StackPanel Background="{StaticResource DarkBackground}" Orientation="Vertical">
+					<StackPanel Margin="10">
+						<TextBlock Foreground="White" TextWrapping="Wrap" FontSize="15" Margin="0,0,0,10">
+                                    Keyboard Wedge Settings
+						</TextBlock>
+						<TextBlock Foreground="White" TextWrapping="Wrap">
+
+									Below are some settings that can customize the keyboard wedge's behaviour
+						</TextBlock>
+						<StackPanel Margin="10">
+							<GroupBox Header="Automatically add CR LF (line break) after each record or scan" Foreground="White">
+								<StackPanel Orientation="Vertical" Margin="10">
+									<TextBlock TextWrapping="Wrap">
+                                            Enabling this setting will automatically simulate pressing the Enter key after each record
+									</TextBlock>
+									<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+										<CheckBox  x:Name="chbxAddlineBreak" Content=" Add CR, LF after each record" Foreground="White" Margin="2" 
+											  Checked="chbxAddlineBreak_Checked" Unchecked="chbxAddlineBreak_Unchecked" />
+										<!--<Button VerticalAlignment="Center" Style="{StaticResource RoundButton}" Click="enableType2Button_Click">
+											Enable
+										</Button>
+										<Button VerticalAlignment="Center" Style="{StaticResource RoundButton}" Click="disableType2Button_Click">
+											Disable
+										</Button>-->
+									</StackPanel>
+								</StackPanel>
+							</GroupBox>
+							<GroupBox Header="These settings are part of the Tappy configuration" Foreground="White">
+								<StackPanel Orientation="Vertical" Margin="10">
+									<CheckBox  Name="chbxReadUIDOnly" Content=" Read UIDs instead of NDEF" Foreground="White" Margin="2" 
+											  Checked="chbxReadUIDOnly_Checked" Unchecked="chbxReadUIDOnly_Unchecked"/>
+									<CheckBox  Name="chbxScanForType1" Content=" Scan for Type 1 tags" Foreground="White" Margin="2" 
+											  Checked="chbxScanForType1_Checked" Unchecked="chbxScanForType1_Unchecked"/>
+									<CheckBox  Name="chbxSendScanErrMsgs" Content=" Send error messages for bad scans" Foreground="White" Margin="2" />
+									<Button Margin="0,0,10,0" Style="{StaticResource RoundButton}" HorizontalAlignment="Right" Click="setConfigurationButton_Click">Set Configuration</Button>
+									<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+									</StackPanel>
+								</StackPanel>
+							</GroupBox>													
+						</StackPanel>
+					</StackPanel>
+				</StackPanel>
+			</TabItem>
+		</TabControl>
+	</Grid>
 </Window>

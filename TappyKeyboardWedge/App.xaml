@@ -1,9 +1,15 @@
-﻿<Application x:Class="TappyKeyboardWedge.App"
+﻿<Application 
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:TappyKeyboardWedge"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
-    </Application.Resources>
+
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="Styles/TapTrackStyles.xaml"/>
+				<!--<ResourceDictionary Source="/Styles/SimpleStyles.xaml"/>-->
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Application.Resources>
 </Application>
