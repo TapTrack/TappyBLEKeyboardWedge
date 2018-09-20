@@ -55,9 +55,8 @@
     <Reference Include="TapTrack.Ndef, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\TapTrack.Ndef.0.1.0\lib\net452\TapTrack.Ndef.dll</HintPath>
     </Reference>
-    <Reference Include="TapTrack.Tcmp, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>dll\TapTrack.Tcmp.dll</HintPath>
+    <Reference Include="TapTrack.Tcmp, Version=0.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TapTrack.Tcmp.0.8.0\lib\TapTrack\TapTrack.Tcmp.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -194,9 +193,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="app.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="DLL\TapTrack.Tcmp.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

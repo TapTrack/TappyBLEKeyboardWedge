@@ -529,7 +529,7 @@ namespace TappyKeyboardWedge
 			{
 				scanErrMsgSetting = 0x02; //disable scan error messages
 			}
-			ConfigureKioskKeyboardWedgeMode configTappy = new ConfigureKioskKeyboardWedgeMode(type1Setting, uidOrNdefSetting, 0x00, scanErrMsgSetting);
+			ConfigureKioskKeyboardWedgeMode configTappy = new ConfigureKioskKeyboardWedgeMode(type1Setting, uidOrNdefSetting, 0x04, scanErrMsgSetting,1000,2000,200);
 			selectedTappy?.SendCommand(configTappy, InvokeKeyboardFeature);
 
 
